@@ -234,7 +234,7 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
   });
   
   //display all the product from the mongodb in my index page
-  app.get('http://153.92.211.45:2300/',  async(req, res) => {
+  app.get('/',  async(req, res) => {
     
     try {
       const products = await Product.find();
@@ -392,5 +392,5 @@ app.get('/checkout', (req, res) => {
 
 
 app.listen(PORT, ()=>{
-    console.log(`server runnings at http://153.92.211.45:2300/:${PORT}`)
+    console.log(`server runnings at http://153.92.211.45:${PORT}/`)
 })
