@@ -62,6 +62,18 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: false}))
 
+app.get('/',  async(req, res) => {
+    
+    try {
+      const products = await Product.find();
+      res.render('index', {products});
+    } catch (error) {
+      res.status(500).send('Error fetching products');
+    }
+
+    // res.render('index')
+  });
+
 let cart = [];
 // Route to add an item to the cart
 app.post('/cart/add', async (req, res) => {
@@ -236,17 +248,7 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
   });
   
   //display all the product from the mongodb in my index page
-  app.get('/',  async(req, res) => {
-    
-    try {
-      const products = await Product.find();
-      res.render('index', {products});
-    } catch (error) {
-      res.status(500).send('Error fetching products');
-    }
 
-    // res.render('index')
-  });
 
 
   //get product by their Id that is on the mongoDb database collections.
@@ -347,9 +349,9 @@ app.post('/subscribe', (req, res) => {
 
 app.use('/api/auth', authRoutes)
 
-app.get('/', (req, res)=>{
-    res.render('index')
-})
+// app.get('/', (req, res)=>{
+//     res.render('index')
+// })
 
 app.get('/product', async (req,res)=>{
     try {
@@ -397,4 +399,3 @@ app.listen(PORT, ()=>{
     console.log(`server runnings at http://153.92.211.45:${PORT}/`)
 })
 
-module.exports = server;
