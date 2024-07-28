@@ -16,6 +16,26 @@ const bcrypt = require("bcryptjs")
 const session = require('express-session');
 //connecttion to the mongo db database using mongoose.
 
+//mongoDb connnection URL
+var connectionUrl = "mongodb+srv://shazaniyu:shazaniyu@cluster0.jiw1f31.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongoose.connect(connectionUrl).then(
+    ()=>{
+        console.log("DataBase connected")
+    }
+).catch((err)=>{
+    console.log(err)
+})
+
+// Multer setup for file upload
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'assets/uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    }
+  });
+  const upload = multer({ storage: storage });
 
 // Configure session middleware
 app.use(session({
@@ -31,29 +51,12 @@ app.use(session({
 
 //middleware to parse json requests
 app.use(bodyparser.json())
-//mongoDb connnection URL
-var connectionUrl = "mongodb+srv://shazaniyu:shazaniyu@cluster0.jiw1f31.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-mongoose.connect(connectionUrl).then(
-    ()=>{
-        console.log("DataBase connected")
-    }
-).catch((err)=>{
-    console.log(err)
-})
+
 //to host statics files
 app.use(express.static(path.join(__dirname, 'assets')));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Multer setup for file upload
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'assets/uploads/');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
-    }
-  });
-  const upload = multer({ storage: storage });
+
 
 
 // Set EJS as the templating engine
@@ -399,3 +402,4 @@ app.listen(PORT, ()=>{
     console.log(`server runnings at http://153.92.211.45:${PORT}/`)
 })
 
+module.exports =app;
