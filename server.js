@@ -148,7 +148,9 @@ app.get('/cart', (req, res) => {
 
 
 
-
+app.get('/adminlogin', (req, res)=>{
+    res.render('adminlogin')
+})
 
 
 // Login Route
