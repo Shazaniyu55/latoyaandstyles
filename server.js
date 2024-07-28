@@ -238,7 +238,7 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
     
     try {
       const products = await Product.find();
-      res.render('index');
+      res.render('index', {products});
     } catch (error) {
       res.status(500).send('Error fetching products');
     }
