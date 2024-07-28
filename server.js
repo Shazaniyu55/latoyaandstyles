@@ -399,3 +399,4 @@ app.listen(PORT, ()=>{
     console.log(`server runnings at http://153.92.211.45:${PORT}/`)
 })
 
+module.exports = app
