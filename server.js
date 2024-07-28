@@ -234,14 +234,16 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
   });
   
   //display all the product from the mongodb in my index page
-  app.get('/', async (req, res) => {
+  app.get('/',  (req, res) => {
     
-    try {
-      const products = await Product.find();
-      res.render('index', { products });
-    } catch (error) {
-      res.status(500).send('Error fetching products');
-    }
+    // try {
+    //   const products = await Product.find();
+    //   res.render('index');
+    // } catch (error) {
+    //   res.status(500).send('Error fetching products');
+    // }
+
+    res.render('index')
   });
 
 
