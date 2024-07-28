@@ -104,10 +104,10 @@
             <li class="glide__slide">
               <div class="center">
                 <div class="left">
-                  <span>New Inspiration 2024</span>
+                  <span>New Inspiration 2020</span>
                   <h1>THE PERFECT MATCH!</h1>
                   <p>Trending from LADY'S collection</p>
-                  <a href="#section new-arrival" class="hero-btn">SHOP </a>
+                  <a href="#section new-arrival" class="hero-btn">SHOP NOW</a>
                 </div>
                 <div class="right">
                   <img class="img2" src="/images/banner.png" alt="">
@@ -145,7 +145,37 @@
     </section>
 
     <!-- New Arrivals -->
-   
+    <section id="new-arrival" class="section new-arrival">
+      <div class="title">
+        <h1>NEW ARRIVALS</h1>
+        <p>All the latest picked from designer of our store</p>
+      </div>
+
+      <div class="product-center">
+        <% products.forEach(function(product) { %>
+
+
+        <div class="product-item">
+          <div class="overlay">
+            <a href="#" class="product-thumb">
+              <img src="/uploads/<%= product.image %>" alt="" />
+            </a>
+          </div>
+          <div class="product-info">
+            <span>LADY'S CLOTHES</span>
+            <a href="#"><%= product.description %></a>
+            <h4>₦<%= product.price %></h4>
+          </div>
+          <ul class="icons">
+            <li><i class="bx bx-heart"></i></li>
+            <li><i class="bx bx-search"></i></li>
+            <li><a href="https://www.latoyaandstyles.com/cart/<%= product.id %>"><i class="bx bx-cart"> </i></a> </li>
+          </ul>
+        </div>
+
+        <% }); %>
+      </div>
+    </section>
 
 
     <!-- Promo -->
@@ -167,7 +197,37 @@
 
     <!-- Featured -->
   
-   
+    <section id="new-arrival" class="section new-arrival">
+      <div class="title">
+        <h1>Featured</h1>
+        <p>All the latest picked from designer of our store</p>
+      </div>
+
+      <div class="product-center">
+        <% products.forEach(function(product) { %>
+
+
+        <div class="product-item">
+          <div class="overlay">
+            <a href="#" class="product-thumb">
+              <img src="/uploads/<%= product.image %>" alt="" />
+            </a>
+          </div>
+          <div class="product-info">
+            <span>LADY'S CLOTHES</span>
+            <a href="#"><%= product.description %></a>
+            <h4>₦<%= product.price %></h4>
+          </div>
+          <ul class="icons">
+            <li><i class="bx bx-heart"></i></li>
+            <li><i class="bx bx-search"></i></li>
+            <li><a href="https://www.latoyaandstyles.com/cart/<%= product.id %>"><i class="bx bx-cart"> </i></a> </li>
+          </ul>
+        </div>
+
+        <% }); %>
+      </div>
+    </section>
 
     <!-- Contact -->
     <section class="section contact">
@@ -179,7 +239,7 @@
           <a href="/contact" class="btn btn-1">Contact</a>
         </div>
         <div class="col">
-          <form action="http://localhost:2300/subscribe" method="post">
+          <form action="https://www.latoyaandstyles.com/subscribe" method="post">
             <div>
               <input type="email" name="email" id="email" placeholder="Email Address">
             <button type="submit" class="signupbtn">Send</button>
@@ -232,7 +292,7 @@
           <h1>Get Discount <span>50%</span> Off</h1>
           <p>Sign up to our newsletter and save 30% for you next purchase. No spam, we promise!
           </p>
-          <form action="http://localhost:2300/subscribe" method="post">
+          <form action="https://www.latoyaandstyles.com/subscribe" method="post">
             <input type="email" placeholder="Enter your email..." class="popup-form">
             <button type="submit" href="#">Subscribe</button>
           </form>

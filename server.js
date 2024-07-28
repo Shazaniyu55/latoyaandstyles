@@ -234,16 +234,16 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
   });
   
   //display all the product from the mongodb in my index page
-  app.get('/',  (req, res) => {
+  app.get('/',  async(req, res) => {
     
-    // try {
-    //   const products = await Product.find();
-    //   res.render('index');
-    // } catch (error) {
-    //   res.status(500).send('Error fetching products');
-    // }
+    try {
+      const products = await Product.find();
+      res.render('index');
+    } catch (error) {
+      res.status(500).send('Error fetching products');
+    }
 
-    res.render('index')
+    // res.render('index')
   });
 
 
@@ -392,5 +392,5 @@ app.get('/checkout', (req, res) => {
 
 
 app.listen(PORT, ()=>{
-    console.log(`server runnings at http://localhost:${PORT}`)
+    console.log(`server runnings at https://www.latoyaandstyles.com/:${PORT}`)
 })
