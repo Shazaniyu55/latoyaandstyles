@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Custom StyleSheet -->
+    <title>Checkout</title>
+    <link rel="icon" href="/images/first.jpeg">
+
+ 
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navigation">
+        <div class="nav-center container d-flex">
+            <a href="/" class="logo"><h1>Latoyaandstyles</h1></a>
+
+            <ul class="nav-list d-flex">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/product" class="nav-link">Shop</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="icons d-flex">
+                    <a href="/login" class="icon"><i class="bx bx-user"></i></a>
+                    <a href="/cart" class="icon"><i class="bx bx-cart"></i><span class="d-flex">0</span></a>
+                </li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="bx bx-menu-alt-left"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="container checkout">
+        <h2>Checkout</h2>
+        <form action="/checkout" method="POST">
+            <div class="shipping-address">
+                <h3>Shipping Address</h3>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+                
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+                
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+                
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="zip" required>
+                
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" required>
+            </div>
+
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    <% cart.forEach(item => { %>
+                        <tr>
+                            <td><%= item.name %></td>
+                            <td><%= item.quantity %></td>
+                            <td>₦<%= item.price.toFixed(2) %></td>
+                            <td>₦<%= (item.price * item.quantity).toFixed(2) %></td>
+                        </tr>
+                    <% }) %>
+                </table>
+                <div class="total-price">
+                    <p>Subtotal: ₦<%= total.toFixed(2) %></p>
+                    <!-- Add tax and total calculation as needed -->
+                </div>
+            </div>
+
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <script src="/js/index.js"></script>
+</body>
+</html>

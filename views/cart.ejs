@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+        <!-- Boxicons -->
+        <link
+        href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+        rel="stylesheet"
+      />
+      <!-- Glide js -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+      <!-- Custom StyleSheet -->
+      <title>Latoyaandstyles</title>
+      <link rel="icon" href="/images/first.jpeg">
+    <title>Your Cart</title>
+</head>
+<body>
+    <!-- Navigation (same as before) -->
+
+    <div class="navigation">
+      <div class="nav-center container d-flex">
+        <a href="/" class="logo"><h1>Latoyaandstyles</h1></a>
+
+        <ul class="nav-list d-flex">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/product" class="nav-link">Shop</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+         
+          <li class="icons d-flex">
+            <a href="/login" class="icon">
+              <i class="bx bx-user"></i>
+            </a>
+            <a href="/cart" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="icons d-flex">
+          <a href="/login" class="icon">
+            <i class="bx bx-user"></i>
+          </a>
+          <a href="/cart" class="icon">
+            <i class="bx bx-cart"></i>
+            <span class="d-flex">0</span>
+          </a>
+        </div>
+
+        <div class="hamburger">
+          <i class="bx bx-menu-alt-left"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="container cart">
+      <table>
+          <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th> <!-- Added column for action -->
+          </tr>
+          <% cart.forEach(item => { %>
+              <tr>
+                  <td>
+                      <div class="cart-info">
+                          <img src="/uploads/<%= item.image %>" alt="<%= item.name %>">
+                          <div>
+                              <p><%= item.name %></p>
+                              <span>Price: ₦<%= item.price.toFixed(2) %></span> <br />
+                              <!-- Removed the 'remove' link here, we'll use a form instead -->
+                          </div>
+                      </div>
+                  </td>
+                  <td><input type="number" value="<%= item.quantity %>" max="<%= item.quantity %>"></td>
+                  <td>₦<%= (item.price * item.quantity).toFixed(2) %></td>
+                  <td>
+                      <!-- Form to remove item from cart -->
+                      <form action="http://localhost:2300/cart/remove" method="POST" style="display:inline;">
+                          <input type="hidden" name="productId" value="<%= item.productId %>">
+                          <button type="submit" class="remove-btn">Remove</button>
+                      </form>
+                  </td>
+              </tr>
+          <% }) %>
+      </table>
+      <div class="total-price">
+          <table>
+              <tr>
+                  <td>Subtotal</td>
+                  <td>₦<%= total.toFixed(2) %></td>
+              </tr>
+              <!-- Add tax and total calculation as needed -->
+          </table>
+          <a href="/checkout" class="checkout btn">Proceed To Checkout</a>
+      </div>
+  </div>
+
+    <!-- Footer (same as before) -->
+    <script src="/js/slider.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+</html>

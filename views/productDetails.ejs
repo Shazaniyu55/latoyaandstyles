@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Box icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Latoyaandstyles</title>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <!-- <div class="top-nav">
+      <div class="container d-flex">
+        <p>Order Online Or Call Us: (001) 2222-55555</p>
+        <ul class="d-flex">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div> -->
+    <div class="navigation">
+      <div class="nav-center container d-flex">
+        <a href="/" class="logo"><h1>Latoyaandstyles</h1></a>
+
+        <ul class="nav-list d-flex">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/product" class="nav-link">Shop</a>
+          </li>
+          <li class="nav-item">
+            <a href="/terms" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link"></a>
+          </li>
+          <li class="icons d-flex">
+            <a href="/login" class="icon">
+              <i class="bx bx-user"></i>
+            </a>
+            <div class="icon">
+              <i class="bx bx-search"></i>
+            </div>
+            <div class="icon">
+              <i class="bx bx-heart"></i>
+              <span class="d-flex">0</span>
+            </div>
+            <a href="/cart" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="icons d-flex">
+          <a href="/login" class="icon">
+            <i class="bx bx-user"></i>
+          </a>
+          <div class="icon">
+            <i class="bx bx-search"></i>
+          </div>
+          <div class="icon">
+            <i class="bx bx-heart"></i>
+            <span class="d-flex">0</span>
+          </div>
+          <a href="/cart" class="icon">
+            <i class="bx bx-cart"></i>
+            <span class="d-flex">0</span>
+          </a>
+        </div>
+
+        <div class="hamburger">
+          <i class="bx bx-menu-alt-left"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <section class="section product-detail">
+      <div class="details container">
+        <div class="left image-container">
+          <div class="main">
+            <img src="/uploads/<%= products.image %>" id="zoom" alt="" />
+          </div>
+        </div>
+        <div class="right">
+          <span>Home/T-shirt</span>
+          <h1>Lady's Clothing</h1>
+          <div class="price">₦<%= products.price %></div>
+          
+          <form class="form" action="http://localhost:2300/cart/add" method="post">
+            <input type="hidden" name="productId" value="<%= products.id %>" />
+            <input type="hidden" name="productImage" value="<%= products.image %>" />
+              <input type="number" name="quantity" placeholder="1"  required />
+              <button type="submit" class="addCart">Add To Cart</button>
+
+          </form>
+          <h3>Product Detail</h3>
+          <p>
+            <%= products.description %>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related -->
+   
+    <!-- Footer -->
+    
+    <footer class="footer">
+      <div class="row">
+        <div class="col d-flex">
+          <h4>INFORMATION</h4>
+          <a href="">About us</a>
+          <a href="">Contact Us</a>
+          <a href="">Term & Conditions</a>
+          <a href="">Shipping Guide</a>
+        </div>
+        <div class="col d-flex">
+          <h4>USEFUL LINK</h4>
+          <a href="">Online Store</a>
+          <a href="">Customer Services</a>
+          <a href="">Promotion</a>
+          <a href="">Top Brands</a>
+        </div>
+        <div class="col d-flex">
+          <span><a href="https://www.instagram.com/latoyaandstyles?igsh=MWtpMDlnM2xzc2MxMQ%3D%3D&utm_source=qr"><i class='bx bxl-instagram-alt'> </i></a> </span>
+          <span>  <a href="https://whatsapp.com/biz/"> <i class='bx bxl-whatsapp' ></i></a></span>
+          <span>  <a href="https://ebere.tracy@yahoo.com"> <i class="bx bx-envelope icon'" ></i></a></span>
+
+        </div>
+      </div>
+    </footer>
+    <!-- Custom Script -->
+    <script src="/js/slider.js"></script>
+    <script src="/js/index.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/zoomsl.min.js"></script>
+    <script>
+      $(function () {
+        console.log("hello");
+        $("#zoom").imagezoomsl({
+          zoomrange: [4, 4],
+        });
+      });
+    </script>
+  </body>
+</html>
