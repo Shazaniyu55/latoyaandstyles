@@ -2,22 +2,19 @@
 const express =require("express");
 const app =express();
 const PORT = process.env.PORT || 2300;
-const mongoose = require("mongoose")
-const path = require("path")
-const authRoutes = require('./routes/auth.route')
-const productRoutes = require('./routes/product.route')
-const bodyparser = require('body-parser')
-const errorHandler = require('./util/error')
-const nodemailer = require('nodemailer')
-const multer = require('multer')
-const Product = require("./model/product.model")
-const User = require("./model/user.model")
-const jwt = require('jsonwebtoken');
-const bcrypt = require("bcryptjs")
+const mongoose = require("mongoose");
+const path = require("path");
+const authRoutes = require('./routes/auth.route');
+const productRoutes = require('./routes/product.route');
+const bodyparser = require('body-parser');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+const Product = require("./model/product.model");
+const User = require("./model/user.model");
+const bcrypt = require("bcryptjs");
 const session = require('express-session');
-const cors = require('cors')
+const cors = require('cors');
 //connecttion to the mongo db database using mongoose.
-
 //mongoDb connnection URL
 var connectionUrl = "mongodb+srv://shazaniyu:shazaniyu@cluster0.jiw1f31.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 mongoose.connect(connectionUrl).then(
@@ -47,15 +44,11 @@ app.use(session({
     cookie: { secure: true } // set secure: true if using HTTPS
 }));
 
-
-
-
 app.use(cors())
 //middleware to parse json requests
 app.use(bodyparser.json())
 //to host statics files
 app.use(express.static(path.join(__dirname, 'assets')));
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); 
@@ -183,7 +176,6 @@ app.post('/admin-login', async (req, res) => {
         }else{
         //       // Create and sign JWT token
         // const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, "JWT_SECRET", { expiresIn: '1h' });
-
         // // Set the token as a cookie
         // res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Token expires in 1 hour
          res.render('upload');
@@ -382,7 +374,7 @@ app.get('/checkout', (req, res) => {
 
 
 app.listen(PORT, ()=>{
-    console.log(`server runnings at http://153.92.211.45:${PORT}/`)
+    console.log(`server runnings at http://localhost:${PORT}/`)
 })
 
 module.exports =app;
