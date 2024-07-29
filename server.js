@@ -179,14 +179,16 @@ app.post('/admin-login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
+        }else{
+        //       // Create and sign JWT token
+        // const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, "JWT_SECRET", { expiresIn: '1h' });
+
+        // // Set the token as a cookie
+        // res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Token expires in 1 hour
+         res.render('upload');
         }
 
-        // Create and sign JWT token
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, "JWT_SECRET", { expiresIn: '1h' });
-
-               // Set the token as a cookie
-               res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Token expires in 1 hour
-               res.redirect('/admin-dashboard');
+      
 
 
     } catch (err) {
@@ -196,7 +198,7 @@ app.post('/admin-login', async (req, res) => {
 
 // Middleware to authenticate JWT tokens
 const authMiddleware = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.headers['authorization']?.split(' ')[1];
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }
