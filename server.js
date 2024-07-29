@@ -44,9 +44,7 @@ app.use(session({
     cookie: { secure: true } // set secure: true if using HTTPS
 }));
 
-app.use(cors({
-    origin: 'https://www.latoyaandstyles.com/'
-}))
+app.use(cors());
 //middleware to parse json requests
 app.use(bodyparser.json())
 //to host statics files
