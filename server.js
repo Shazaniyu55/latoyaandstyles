@@ -189,7 +189,7 @@ app.post('/admin-login', async (req, res) => {
 
                // Set the token as a cookie
                res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Token expires in 1 hour
-               res.render('upload');
+               res.redirect('/upload');
 
 
     } catch (err) {
