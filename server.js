@@ -14,6 +14,7 @@ const User = require("./model/user.model")
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs")
 const session = require('express-session');
+const cors = require('cors')
 //connecttion to the mongo db database using mongoose.
 
 //mongoDb connnection URL
@@ -48,22 +49,18 @@ app.use(session({
 
 
 
-
+app.use(cors())
 //middleware to parse json requests
 app.use(bodyparser.json())
-
 //to host statics files
 app.use(express.static(path.join(__dirname, 'assets')));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-
-
-
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); 
 
 app.use(express.urlencoded({extended: false}))
+app.use('/api/auth', authRoutes)
 
 app.get('/',  async(req, res) => {
     
@@ -224,10 +221,6 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
 });
 
 
-// Routes to render frontend html
-// app.get('/upload', (req, res) => {
-//     res.render('upload');
-//   });
   
   //upload functionality to upload the image to the product database
   app.post('/uploadProduct', upload.single('image'), async (req, res) => {
@@ -349,11 +342,6 @@ app.post('/subscribe', (req, res) => {
 });
 
 
-app.use('/api/auth', authRoutes)
-
-// app.get('/', (req, res)=>{
-//     res.render('index')
-// })
 
 app.get('/product', async (req,res)=>{
     try {
@@ -372,13 +360,6 @@ app.get('/about', (req,res)=>{
 app.get('/login', (req,res)=>{
     res.render('login')
 })
-
-
-app.get('/admin', (req, res)=>{
-    res.render('adminlogin')
-})
-
-
 
 app.get('/contact', (req,res)=>{
     res.render('contact')
