@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const {uploadProduct} = require('../controller/product.controller'); // Adjust the path according to your project structure
 
-const router = express.Router();
+const router = express();
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
