@@ -62,7 +62,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: false}))
 app.use('/api/auth', authRoutes)
-app.use('/api/uploadProduct', productRoutes);
+app.use('/api/product', productRoutes);
 app.get('/',  async(req, res) => {
     
     try {
