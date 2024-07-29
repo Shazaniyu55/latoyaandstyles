@@ -334,7 +334,7 @@ app.post('/subscribe', (req, res) => {
         from: 'shaazaniyu@gmail.com', // Sender address
         to: 'zoeadoree33@gmail.com, shazaniyu@gmail.com, ebere.tracy@yahoo.com',// List of recipients
         subject: 'LatayoStore Subscribers Email', // Subject line
-        text: `Name: Email: ${email}`, // Plain text body
+        text: `Email: ${email}`, // Plain text body
         // You can add HTML to the email if needed
         // html: '<p>Name: ' + name + '</p><p>Email: ' + email + '</p><p>Message: ' + message + '</p>'
     };
