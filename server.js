@@ -167,7 +167,9 @@ app.get('/adminlogin', (req, res)=>{
     res.render('adminlogin')
 })
 
-
+app.get('/upload', (req, res)=>{
+    res.render('upload')
+})
 // Login Route
 app.post('/admin-login', async (req, res) => {
     const { email, password } = req.body;
