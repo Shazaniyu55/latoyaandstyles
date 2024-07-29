@@ -167,9 +167,7 @@ app.get('/adminlogin', (req, res)=>{
     res.render('adminlogin')
 })
 
-app.get('/upload', (req, res)=>{
-    res.render('upload')
-})
+
 // Login Route
 app.post('/admin-login', async (req, res) => {
     const { email, password } = req.body;
@@ -191,7 +189,7 @@ app.post('/admin-login', async (req, res) => {
 
                // Set the token as a cookie
                res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Token expires in 1 hour
-               res.redirect('/upload');
+               res.render('upload');
 
 
     } catch (err) {
@@ -232,8 +230,8 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
 //   });
   
   //upload functionality to upload the image to the product database
-  app.post('/uploads', upload.single('image'), async (req, res) => {
-    const { name, description, price, stock } = req.body;
+  app.post('/uploadProduct', upload.single('image'), async (req, res) => {
+    const { name, description, price, stock, } = req.body;
     const image = req.file ? req.file.filename : '';
   
     const product = new Product({
@@ -252,7 +250,6 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
     }
   });
   
-  //display all the product from the mongodb in my index page
 
 
 
