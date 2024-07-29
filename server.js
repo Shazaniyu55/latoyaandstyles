@@ -163,8 +163,8 @@ app.get('/cart', (req, res) => {
 
 
 
-app.get('/adminlogin', (req, res)=>{
-    res.render('adminlogin')
+app.get('/upload', (req, res)=>{
+    res.render('upload')
 })
 
 
@@ -198,30 +198,30 @@ app.post('/admin-login', async (req, res) => {
 });
 
 // Middleware to authenticate JWT tokens
-const authMiddleware = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
+// const authMiddleware = (req, res, next) => {
+//     const token = req.headers['authorization']?.split(' ')[1];
+//     if (!token) {
+//         return res.status(401).json({ message: 'No token provided' });
+//     }
 
-    jwt.verify(token, "JWT_SECRET", (err, decoded) => {
-        if (err) {
-            return res.redirect('/adminlogin');
-        }
-        req.user = decoded;
-        next();
-    });
-};
+//     jwt.verify(token, "JWT_SECRET", (err, decoded) => {
+//         if (err) {
+//             return res.redirect('/adminlogin');
+//         }
+//         req.user = decoded;
+//         next();
+//     });
+// };
 
 
-// Admin Dashboard Route (protected)
-app.get('/admin-dashboard', authMiddleware, (req, res) => {
-    if (!req.user.isAdmin) {
-        return res.status(403).json({ message: 'Access denied' });
-    }
-    // res.json({ message: 'Welcome to the admin dashboard!' });
-      res.render('upload', { user: req.user });
-});
+// // Admin Dashboard Route (protected)
+// app.get('/admin-dashboard', authMiddleware, (req, res) => {
+//     if (!req.user.isAdmin) {
+//         return res.status(403).json({ message: 'Access denied' });
+//     }
+//     // res.json({ message: 'Welcome to the admin dashboard!' });
+//       res.render('upload', { user: req.user });
+// });
 
 
 // Routes to render frontend html
