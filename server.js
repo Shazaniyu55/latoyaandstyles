@@ -44,7 +44,7 @@ app.use(session({
     secret: 'latoyastore', // replace with a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // set secure: true if using HTTPS
+    cookie: { secure: true } // set secure: true if using HTTPS
 }));
 
 
