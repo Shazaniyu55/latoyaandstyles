@@ -8,15 +8,15 @@ const router = express.Router();
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Adjust the destination folder as needed
+  destination: (req, file, cb) => {
+    cb(null, 'assets/uploads/');
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-
 const upload = multer({ storage: storage });
+
 
 // Define the route for uploading products
 router.post('/uploadProduct', upload.single('image'), uploadProduct);
