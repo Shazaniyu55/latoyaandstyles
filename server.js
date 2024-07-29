@@ -230,7 +230,7 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
 //   });
   
   //upload functionality to upload the image to the product database
-  app.post('/upload', upload.single('image'), async (req, res) => {
+  app.post('/uploads', upload.single('image'), async (req, res) => {
     const { name, description, price, stock } = req.body;
     const image = req.file ? req.file.filename : '';
   
