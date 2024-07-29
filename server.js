@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 2300;
 const mongoose = require("mongoose")
 const path = require("path")
 const authRoutes = require('./routes/auth.route')
+const productRoutes = require('./routes/product.route')
 const bodyparser = require('body-parser')
 const errorHandler = require('./util/error')
 const nodemailer = require('nodemailer')
@@ -61,7 +62,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({extended: false}))
 app.use('/api/auth', authRoutes)
-
+app.use('/api/uploadProduct', productRoutes);
 app.get('/',  async(req, res) => {
     
     try {
@@ -197,53 +198,53 @@ app.post('/admin-login', async (req, res) => {
 });
 
 // Middleware to authenticate JWT tokens
-const authMiddleware = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
+// const authMiddleware = (req, res, next) => {
+//     const token = req.headers['authorization']?.split(' ')[1];
+//     if (!token) {
+//         return res.status(401).json({ message: 'No token provided' });
+//     }
 
-    jwt.verify(token, "JWT_SECRET", (err, decoded) => {
-        if (err) {
-            return res.redirect('/adminlogin');
-        }
-        req.user = decoded;
-        next();
-    });
-};
+//     jwt.verify(token, "JWT_SECRET", (err, decoded) => {
+//         if (err) {
+//             return res.redirect('/adminlogin');
+//         }
+//         req.user = decoded;
+//         next();
+//     });
+// };
 
 
 // Admin Dashboard Route (protected)
-app.get('/admin-dashboard', authMiddleware, (req, res) => {
-    if (!req.user.isAdmin) {
-        return res.status(403).json({ message: 'Access denied' });
-    }
-    // res.json({ message: 'Welcome to the admin dashboard!' });
-      res.render('upload', { user: req.user });
-});
+// app.get('/admin-dashboard', authMiddleware, (req, res) => {
+//     if (!req.user.isAdmin) {
+//         return res.status(403).json({ message: 'Access denied' });
+//     }
+//     // res.json({ message: 'Welcome to the admin dashboard!' });
+//       res.render('upload', { user: req.user });
+// });
 
 
   
   //upload functionality to upload the image to the product database
-  app.post('/uploadProduct', upload.single('image'), async (req, res) => {
-    const { name, description, price, stock, } = req.body;
-    const image = req.file ? req.file.filename : '';
+//   app.post('/uploadProduct', upload.single('image'), async (req, res) => {
+//     const { name, description, price, stock, } = req.body;
+//     const image = req.file ? req.file.filename : '';
   
-    const product = new Product({
-      name,
-      description,
-      price,
-      stock,
-      image
-    });
+//     const product = new Product({
+//       name,
+//       description,
+//       price,
+//       stock,
+//       image
+//     });
   
-    try {
-      await product.save();
-      res.redirect('/');
-    } catch (error) {
-      res.status(500).send('Error uploading product');
-    }
-  });
+//     try {
+//       await product.save();
+//       res.redirect('/');
+//     } catch (error) {
+//       res.status(500).send('Error uploading product');
+//     }
+//   });
   
 
 
