@@ -27,25 +27,8 @@ mongoose.connect(connectionUrl).then(
 })
 
 
-const storages = multer.memoryStorage();
-const uploads = multer({storage: storages});
 
 
-cloudinary.config({
-    cloud_name: 'codegeek',
-    api_key: '332411673695649',
-    api_secret:'eTxb72WlNiKkBsXDIRluPI73hKI'
-})
-// Multer setup for file upload
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'assets/uploads/');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
-    }
-  });
-  const upload = multer({ storage: storage });
 
 // Configure session middleware
 app.use(session({
@@ -227,50 +210,7 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
 });
 
 
-  
-  //upload functionality to upload the image to the product database
-  app.post('/uploadProduct', uploads.single('image'), async (req, res) => {
-    const { name, description, price, stock } = req.body;
-    const file = req.file;
-  
-    if (!file) {
-      return res.status(400).send('No file uploaded');
-    }
-  
-    try {
-      // Upload image to Cloudinary
-      const result = await cloudinary.uploader.upload_stream(
-        { folder: 'uploads' },
-        async (error, cloudinaryResult) => {
-          if (error) {
-            return res.status(500).send('Error uploading image to Cloudinary');
-          }
-  
-          // Create a new product with Cloudinary URL
-          const product = new Product({
-            name,
-            description,
-            price,
-            stock,
-            image: cloudinaryResult.secure_url
-          });
-  
-          try {
-            await product.save();
-            res.redirect('/');
-          } catch (saveError) {
-            res.status(500).send('Error saving product to database');
-          }
-        }
-      );
-  
-      // Pipe the file buffer to Cloudinary
-      file.stream.pipe(result);
-    } catch (error) {
-      res.status(500).send('Error uploading product');
-    }
-  });
-  
+
 
 
 
