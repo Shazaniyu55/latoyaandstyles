@@ -35,7 +35,7 @@ app.use(session({
     secret: 'latoyastore', // replace with a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } // set secure: true if using HTTPS
+    cookie: { secure: false } // set secure: true if using HTTPS
 }));
 
 app.use(cors());
@@ -62,7 +62,7 @@ app.get('/',  async(req, res) => {
     // res.render('index')
   });
 
-let cart = [];
+
 // Route to add an item to the cart
 app.post('/cart/add', async (req, res) => {
     const { productId, quantity, productImage } = req.body;
@@ -98,7 +98,7 @@ app.post('/cart/add', async (req, res) => {
         }
 
         // Optionally store the cart in the session if needed
-        // req.session.cart = req.session.cart;
+        req.session.cart = req.session.cart;
 
         // Redirect to the cart page
         res.redirect('/cart');
@@ -109,6 +109,8 @@ app.post('/cart/add', async (req, res) => {
     }
 });
 
+
+let cart = [];
 // Route to remove an item from the cart
 app.post('/cart/remove', (req, res) => {
     const { productId } = req.body;
