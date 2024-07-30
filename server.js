@@ -9,6 +9,7 @@ const productRoutes = require('./routes/product.route');
 const bodyparser = require('body-parser');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
+const cloudinary = require("cloudinary").v2;
 const Product = require("./model/product.model");
 const User = require("./model/user.model");
 const bcrypt = require("bcryptjs");
@@ -25,6 +26,16 @@ mongoose.connect(connectionUrl).then(
     console.log(err)
 })
 
+
+const storages = multer.memoryStorage();
+const uploads = multer({storage: storages});
+
+
+cloudinary.config({
+    cloud_name: 'codegeek',
+    api_key: '332411673695649',
+    api_secret:'eTxb72WlNiKkBsXDIRluPI73hKI'
+})
 // Multer setup for file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -190,53 +201,75 @@ app.post('/admin-login', async (req, res) => {
 });
 
 // Middleware to authenticate JWT tokens
-// const authMiddleware = (req, res, next) => {
-//     const token = req.headers['authorization']?.split(' ')[1];
-//     if (!token) {
-//         return res.status(401).json({ message: 'No token provided' });
-//     }
+const authMiddleware = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
 
-//     jwt.verify(token, "JWT_SECRET", (err, decoded) => {
-//         if (err) {
-//             return res.redirect('/adminlogin');
-//         }
-//         req.user = decoded;
-//         next();
-//     });
-// };
+    jwt.verify(token, "JWT_SECRET", (err, decoded) => {
+        if (err) {
+            return res.redirect('/adminlogin');
+        }
+        req.user = decoded;
+        next();
+    });
+};
 
 
-// Admin Dashboard Route (protected)
-// app.get('/admin-dashboard', authMiddleware, (req, res) => {
-//     if (!req.user.isAdmin) {
-//         return res.status(403).json({ message: 'Access denied' });
-//     }
-//     // res.json({ message: 'Welcome to the admin dashboard!' });
-//       res.render('upload', { user: req.user });
-// });
+//Admin Dashboard Route (protected)
+app.get('/admin-dashboard', authMiddleware, (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: 'Access denied' });
+    }
+    // res.json({ message: 'Welcome to the admin dashboard!' });
+      res.render('upload', { user: req.user });
+});
 
 
   
   //upload functionality to upload the image to the product database
-//   app.post('/uploadProduct', upload.single('image'), async (req, res) => {
-//     const { name, description, price, stock, } = req.body;
-//     const image = req.file ? req.file.filename : '';
+  app.post('/uploadProduct', uploads.single('image'), async (req, res) => {
+    const { name, description, price, stock } = req.body;
+    const file = req.file;
   
-//     const product = new Product({
-//       name,
-//       description,
-//       price,
-//       stock,
-//       image
-//     });
+    if (!file) {
+      return res.status(400).send('No file uploaded');
+    }
   
-//     try {
-//       await product.save();
-//       res.redirect('/');
-//     } catch (error) {
-//       res.status(500).send('Error uploading product');
-//     }
-//   });
+    try {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload_stream(
+        { folder: 'uploads' },
+        async (error, cloudinaryResult) => {
+          if (error) {
+            return res.status(500).send('Error uploading image to Cloudinary');
+          }
+  
+          // Create a new product with Cloudinary URL
+          const product = new Product({
+            name,
+            description,
+            price,
+            stock,
+            image: cloudinaryResult.secure_url
+          });
+  
+          try {
+            await product.save();
+            res.redirect('/');
+          } catch (saveError) {
+            res.status(500).send('Error saving product to database');
+          }
+        }
+      );
+  
+      // Pipe the file buffer to Cloudinary
+      file.stream.pipe(result);
+    } catch (error) {
+      res.status(500).send('Error uploading product');
+    }
+  });
   
 
 
