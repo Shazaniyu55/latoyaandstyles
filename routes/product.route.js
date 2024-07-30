@@ -10,15 +10,8 @@ const router = express();
 
 
 // Set up storage and file naming for multer
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'assets/uploads'); // Directory to store the file
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // File naming
-    }
-});
-
+// Set up memory storage for multer
+const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
 
