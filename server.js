@@ -63,44 +63,39 @@ app.get('/',  async(req, res) => {
   });
 
 
-// Route to add an item to the cart
+
+  // Route to add an item to the cart
 app.post('/cart/add', async (req, res) => {
     const { productId, quantity, productImage } = req.body;
 
     try {
-        // Use async/await to find the product by ID
-        const product = await Product.findById(productId);
+        if (!productId || !quantity) {
+            return res.status(400).json({ message: 'Product ID and quantity are required' });
+        }
 
+        const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Initialize cart in session if it doesn't exist
         if (!req.session.cart) {
             req.session.cart = [];
         }
 
-        // Find if the product is already in the cart
-        const cartItem = req.session.cart.find(item => item.productId === productId);
-
+        let cartItem = req.session.cart.find(item => item.productId === productId);
         if (cartItem) {
-            // Update quantity if item already exists
             cartItem.quantity += parseInt(quantity, 10);
         } else {
-            // Add new item to cart
             req.session.cart.push({
                 productId,
                 quantity: parseInt(quantity, 10),
                 name: product.name,
                 price: product.price,
-                image: productImage
+                image: productImage || product.image // Use the provided image or fallback to product's image
             });
         }
 
-        // Optionally store the cart in the session if needed
-        req.session.cart = req.session.cart;
-
-        // Redirect to the cart page
+        console.log('Cart after update:', req.session.cart);
         res.redirect('/cart');
 
     } catch (err) {
@@ -109,44 +104,96 @@ app.post('/cart/add', async (req, res) => {
     }
 });
 
+// let cart = [];
+// // Route to add an item to the cart
+// app.post('/cart/add', async (req, res) => {
+//     const { productId, quantity, productImage } = req.body;
 
-let cart = [];
+//     try {
+//         // Use async/await to find the product by ID
+//         const product = await Product.findById(productId);
+
+//         if (!product) {
+//             return res.status(404).json({ message: 'Product not found' });
+//         }
+
+//         // Initialize cart in session if it doesn't exist
+//         if (!req.session.cart) {
+//             req.session.cart = [];
+//         }
+
+//         // Find if the product is already in the cart
+//         const cartItem = req.session.cart.find(item => item.productId === productId);
+
+//         if (cartItem) {
+//             // Update quantity if item already exists
+//             cartItem.quantity += parseInt(quantity, 10);
+//         } else {
+//             // Add new item to cart
+//             req.session.cart.push({
+//                 productId,
+//                 quantity: parseInt(quantity, 10),
+//                 name: product.name,
+//                 price: product.price,
+//                 image: productImage
+//             });
+//         }
+
+//         // Optionally store the cart in the session if needed
+        
+
+//         // Redirect to the cart page
+//         res.redirect('/cart');
+
+//     } catch (err) {
+//         console.error('Error adding item to cart:', err);
+//         res.status(500).send('Error adding item to cart');
+//     }
+// });
+
+
+
 // Route to remove an item from the cart
 app.post('/cart/remove', (req, res) => {
     const { productId } = req.body;
 
-    // Initialize cart in session if it doesn't exist
     if (!req.session.cart) {
         req.session.cart = [];
     }
 
-    // Find index of the product to remove
     const itemIndex = req.session.cart.findIndex(item => item.productId === productId);
-
     if (itemIndex > -1) {
-        req.session.cart.splice(itemIndex, 1); // Remove the item
-        res.redirect('/cart'); // Redirect to the cart page
+        req.session.cart.splice(itemIndex, 1);
+        res.redirect('/cart');
     } else {
         res.status(404).send('Item not found');
     }
 });
 
 
+
 app.get('/cart', (req, res) => {
-    // Ensure cart is initialized
     const cart = req.session.cart || [];
-    let total = 0;
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // Calculate total price
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-    });
-
-    res.render('cart', {
-        cart: cart,
-        total: total
-    });
+    res.render('cart', { cart, total });
 });
+
+// app.get('/cart', (req, res) => {
+//     // Ensure cart is initialized
+//     const cart = req.session.cart || [];
+//     let total = 0;
+
+//     // Calculate total price
+//     cart.forEach(item => {
+//         total += item.price * item.quantity;
+//     });
+
+//     res.render('cart', {
+//         cart: cart,
+//         total: total
+//     });
+// });
 
 
 
@@ -340,7 +387,6 @@ app.get('/signup', (req,res)=>{
 })
 
 app.get('/checkout', (req, res) => {
-    // Assuming you have some way to get the cart data from the session or database
     const cart = req.session.cart || []; // Example: Get cart from session
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0); // Example: Calculate total
 
