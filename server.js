@@ -38,7 +38,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({mongoUrl: connectionUrl}),
-    cookie: { secure: true } // set secure: true if using HTTPS
+    cookie: { secure: false } // set secure: true if using HTTPS
 }));
 
 app.use(cors());
