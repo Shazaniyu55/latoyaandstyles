@@ -15,6 +15,8 @@ const User = require("./model/user.model");
 const bcrypt = require("bcryptjs");
 const session = require('express-session');
 const cors = require('cors');
+const MongoStore = require('connect-mongo');
+
 //connecttion to the mongo db database using mongoose.
 //mongoDb connnection URL
 var connectionUrl = "mongodb+srv://shazaniyu:shazaniyu@cluster0.jiw1f31.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -35,7 +37,8 @@ app.use(session({
     secret: 'latoyastore', // replace with a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // set secure: true if using HTTPS
+    store: MongoStore.create({mongoUrl: connectionUrl}),
+    cookie: { secure: true } // set secure: true if using HTTPS
 }));
 
 app.use(cors());
