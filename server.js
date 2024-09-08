@@ -390,6 +390,7 @@ app.get('/checkout', (req, res) => {
     const cart = req.session.cart || []; // Example: Get cart from session
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0); // Example: Calculate total
 
+    console.log(cart)
     res.render('checkoutpage', { cart, total });
 });
 
