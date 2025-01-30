@@ -223,7 +223,13 @@ app.get('/admin-dashboard', authMiddleware, (req, res) => {
             return res.status(404).send('Product not found');
         }
 
-        res.render('productDetails', { products });
+        if (!req.session.cart) {
+            req.session.cart = [];
+        }
+    
+        const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
+
+        res.render('productDetails', { products, cartItemCount });
     } catch (error) {
         res.status(500).send('Error fetching product');
     }
