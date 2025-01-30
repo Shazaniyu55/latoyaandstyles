@@ -65,7 +65,7 @@ app.get('/',  async(req, res) => {
 
     const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
     // res.json({ cartItemCount });
-    console.log(cartItemCount)
+    //console.log(cartItemCount)
       
       res.render('index', {products, cartItemCount});
     } catch (error) {
@@ -313,7 +313,15 @@ app.post('/subscribe', (req, res) => {
 app.get('/product', async (req,res)=>{
     try {
         const products = await Product.find();
-        res.render('product', { products });
+              // Initialize cart if it doesn't exist
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
+    // res.json({ cartItemCount });
+    //console.log(cartItemCount)
+        res.render('product', { products, cartItemCount });
       } catch (error) {
         res.status(500).send('Error fetching products');
       }
@@ -321,7 +329,12 @@ app.get('/product', async (req,res)=>{
 
 
 app.get('/about', (req,res)=>{
-    res.render( 'about')
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
+    res.render( 'about', {cartItemCount})
 })
 
 app.get('/login', (req,res)=>{
@@ -329,7 +342,12 @@ app.get('/login', (req,res)=>{
 })
 
 app.get('/contact', (req,res)=>{
-    res.render('contact')
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
+    res.render('contact',{cartItemCount})
 })
 
 app.get('/signup', (req,res)=>{
