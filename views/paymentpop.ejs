@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latoyaandstyles</title>
+    <link rel="stylesheet" href="/css/pop.css">
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="popup">
+        <h2>Hello <%= name %> Thanks For your Patronage</h2>
+        <p>Please Pay ₦<%= total %> into the account number  displayed and upload proof of payment before delivery</p> 
+
+        <p>
+            Bank:Access Bank
+        </p> 
+
+        <p>
+            Account number: 0098315834
+        </p>
+
+        <p>
+            Account Name: Tracy Ebere Egejuru
+        </p> <br>
+         
+        
+
+        <form action="https://www.latoyaandstyles.com/api/product/uploadProof" method="post" enctype="multipart/form-data">
+            <input type="file" name="niyu" id="niyu">
+            <button type="submit">Upload</button>
+        </form>
+
+
+           
+        
+        
+        
+    
+        
+    </div>
+    
+
+   
+
+    <script src="/js/pop.js"></script>
+</body>
+</html>
