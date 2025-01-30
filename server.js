@@ -143,7 +143,13 @@ app.get('/cart', (req, res) => {
     const cart = req.session.cart || [];
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    res.render('cart', { cart, total });
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    const cartItemCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
+
+    res.render('cart', { cart, total, cartItemCount });
 });
 
 
