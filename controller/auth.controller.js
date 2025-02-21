@@ -38,7 +38,7 @@ const signIn = async(req, res, next)=>{
                 )
 
                 const {password: pass, ...rest} = validUser._doc
-                res.render('dashbord', {rest})
+                res.render('dashbord', {rest, user:req.session.user})
                 // res.status(200).cookie('access_token', token, {httpOnly: true}).json(rest)
             }
         } catch (error) {

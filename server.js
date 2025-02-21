@@ -159,6 +159,19 @@ app.get('/adminlogin', (req, res)=>{
     res.render('adminlogin')
 })
 
+app.get('/manage/:adminId', async(req, res)=>{
+    try {
+        const {adminId} = req.params; // Assuming req.user is populated by the authentication middleware
+
+        // Find all jobs posted by this admin
+        const jobs = await Product.find();
+
+        //res.status(200).json(jobs);
+        res.render('admin/html/edit', {jobs, user:req.session.user})
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching jobs', error });
+    }
+})
 
 // Login Route
 app.post('/admin-login', async (req, res) => {
@@ -170,6 +183,11 @@ app.post('/admin-login', async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
+        req.session.user ={
+            id: user._id,
+            email: user.email,
+            username: user.username
+        }
 
         // Compare passwords
         const isMatch = await bcrypt.compare(password, user.password);
@@ -177,7 +195,7 @@ app.post('/admin-login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }else{
 
-         res.render('admin/html/dashboard', {proof});
+         res.render('admin/html/dashboard', {proof, user:req.session.user});
         }
 
       

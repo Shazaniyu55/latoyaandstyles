@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Star Admin2 </title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/style2.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="" />
+    <style>
+      /* Add this CSS to style the preloader */
+   .preloader {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(255, 255, 255, 0.8);
+       display: none; /* Hidden by default */
+       justify-content: center;
+       align-items: center;
+       z-index: 9999;
+   }
+   
+   .spinner {
+       border: 4px solid rgba(0, 0, 0, 0.1);
+       border-left: 4px solid #3498db;
+       border-radius: 50%;
+       width: 40px;
+       height: 40px;
+       animation: spin 1s linear infinite;
+   }
+   
+   @keyframes spin {
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+   }
+
+   
+   
+  </style>
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <div class="me-3">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+              <span class="icon-menu"></span>
+            </button>
+          </div>
+          <div>
+            <a class="navbar-brand brand-logo" href="">
+              <img src="/images/logo2.jpeg" alt="logo" />
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="">
+              <img src="/images/logo2.jpeg" alt="logo" />
+            </a>
+          </div>
+        </div>
+        
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/dash/<%= user.id %>">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item nav-category">Action</li>
+            
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="" aria-expanded="false" aria-controls="form-elements">
+                <span class="menu-title">Edit Product</span>
+              </a>
+             
+            </li>
+            
+            
+            
+            
+            
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="container">
+              <div class="row justify-content-center">
+                <% if (jobs.length === 0) { %>
+                  <div class="col-12 text-center">
+                    <p>You have not posted any jobs yet.</p>
+                  </div>
+                <% } else { %>
+                  <% jobs.forEach((job, index) => { %>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                      <div class="card">
+                        <img src="<%= job.image %>" class="card-img-top img-fluid" alt="Job Image">
+                        <div class="card-body text-center">
+                          <p class="card-text"><%= job.description %></p>
+                          <form action="/api/auth/deletejob/<%= job.id %>" method="post">
+                            <input type="hidden" name="adminId" value="<%= user.id %>">
+                            <button class="btn btn-danger">Delete</button>
+                          </form>
+                          <br>
+                          <!-- Trigger for Edit Modal -->
+                          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal<%= index %>">
+                            Edit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <!-- Modal for Editing Job Description -->
+                    <div class="modal fade" id="editModal<%= index %>" tabindex="-1" aria-labelledby="editModalLabel<%= index %>" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form action="/api/auth/editjob/<%= job.id %>" method="post">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editModalLabel<%= index %>">Edit Job Description</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <input type="hidden" name="adminId" value="<%= user.id %>">
+                              <div class="mb-3">
+                                <label for="jobDescription<%= index %>" class="form-label">Description</label>
+                                <textarea class="form-control" id="jobDescription<%= index %>" name="description" rows="4"><%= job.description %></textarea>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  <% }) %>
+                <% } %>
+              </div>
+            </div>
+            
+              
+              
+              
+              
+              
+      <!-- preloader -->
+    <div id="preloader" class="preloader">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+  </div>         
+              
+            
+              
+              
+              
+              
+              
+       
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+        
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+   
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="/vendors/select2/select2.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/js/file-upload.js"></script>
+    <script src="/js/typeahead.js"></script>
+    <script src="/js/select2.js"></script>
+    <!-- End custom js for this page-->
+  </body>
+</html>
