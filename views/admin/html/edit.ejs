@@ -121,9 +121,9 @@
                         <img src="<%= job.image %>" class="card-img-top img-fluid" alt="Job Image">
                         <div class="card-body text-center">
                           <p class="card-text"><%= job.description %></p>
-                          <form action="/api/auth/deletejob/<%= job.id %>" method="post">
+                          <form action="/api/product/deletejob/<%= job.id %>" method="post">
                             <input type="hidden" name="adminId" value="<%= user.id %>">
-                            <button class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
                           </form>
                           <br>
                           <!-- Trigger for Edit Modal -->

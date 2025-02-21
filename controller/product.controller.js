@@ -89,7 +89,7 @@ const paymentProof = async (req, res) => {
                 });
 
                 await product.save();
-                res.send("Successfully uploaded");
+                res.redirect("/cart");
             } catch (error) {
                 console.error('Error saving product:', error);
                 res.status(500).send('Error saving product');
@@ -144,10 +144,10 @@ const deleteJob = async (req, res) => {
         await Product.findByIdAndDelete(jobId);
 
         //res.status(200).json({ message: 'Job deleted successfully' });
-        res.redirect(`dash/${adminId}`)
+        res.redirect(`/manage/${adminId}`)
     } catch (error) {
         console.error('Error deleting job:', error); // Log the error for debugging
         res.status(500).json({ message: 'Error deleting job', error: error.message });
     }
 }; 
-module.exports = { uploadProduct, paymentProof, getAdminJobs };
+module.exports = { uploadProduct, paymentProof, getAdminJobs, deleteJob };
