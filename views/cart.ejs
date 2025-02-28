@@ -89,7 +89,7 @@
                   <td>₦<%= (item.price * item.quantity).toFixed(2) %></td>
                   <td>
                       <!-- Form to remove item from cart -->
-                      <form action="https://www.latoyaandstyles.com/cart/remove" method="POST" style="display:inline;">
+                      <form action="/cart/remove" method="POST" style="display:inline;">
                           <input type="hidden" name="productId" value="<%= item.productId %>">
                           <button type="submit" class="remove-btn">Remove</button>
                       </form>
@@ -105,7 +105,7 @@
               </tr>
               <!-- Add tax and total calculation as needed -->
           </table>
-          <a href="https://www.latoyaandstyles.com/checkout" class="checkout btn">Proceed To Checkout</a>
+          <a href="/checkout" class="checkout btn">Proceed To Checkout</a>
       </div>
   </div>
 

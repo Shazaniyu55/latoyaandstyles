@@ -91,7 +91,7 @@
           <h1>Lady's Clothing</h1>
           <div class="price">₦<%= products.price %></div>
           
-          <form class="form" action="https://www.latoyaandstyles.com/cart/add" method="post">
+          <form class="form" action="/cart/add" method="post">
             <input type="hidden" name="productId" value="<%= products.id %>" />
             <input type="hidden" name="productImage" value="<%= products.image %>" />
               <input type="text" name="quantity" placeholder="1"  required />
@@ -101,6 +101,10 @@
           <h3>Product Detail</h3>
           <p>
             <%= products.description %>
+          </p>
+
+          <p>
+            <%= products.stock %>
           </p>
         </div>
       </div>
