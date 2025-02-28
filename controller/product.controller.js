@@ -121,6 +121,34 @@ const getAdminJobs = async (req, res) => {
     }
 };
 
+const editProduct = async(req, res)=>{
+    try {
+        const { productId } = req.params;
+        const { description } = req.body;
+
+
+        // Check if productId is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({ message: 'Invalid product ID' });
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            productId,
+            { description },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        //res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+        res.redirect(`/manage/${productId}`)
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({ message: 'Error updating product', error: error.message });
+    }
+}
+
 
 const deleteJob = async (req, res) => {
     try {
@@ -150,4 +178,4 @@ const deleteJob = async (req, res) => {
         res.status(500).json({ message: 'Error deleting job', error: error.message });
     }
 }; 
-module.exports = { uploadProduct, paymentProof, getAdminJobs, deleteJob };
+module.exports = { uploadProduct, paymentProof, getAdminJobs, deleteJob, editProduct };
