@@ -406,6 +406,9 @@ app.post('/payout', async(req, res) => {
 
 });
 
+app.get('/sitemap', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'sitemap.xml'))
+ });
 
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {

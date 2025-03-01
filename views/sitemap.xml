@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home Page -->
+  <url>
+    <loc>https://www.latoyaandstyles.com/</loc>
+    <lastmod>2024-12-27</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://www.latoyaandstyles.com/about</loc>
+    <lastmod>2024-12-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Services Page -->
+
+
+  <!-- Individual Service Pages -->
+  <url>
+    <loc>https://www.latoyaandstyles.com/contact</loc>
+    <lastmod>2024-12-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.latoyaandstyles.com/product</loc>
+    <lastmod>2024-12-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQ Page -->
+ 
+
+  <!-- Contact Us Page -->
+ 
+
+
+
+
+  <url>
+    <loc>https://www.latoyaandstyles.com/cart</loc>
+    <lastmod>2024-12-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
